@@ -1,0 +1,6 @@
+@LearnMediator_HostAddress = http://localhost:5115
+
+GET {{LearnMediator_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
