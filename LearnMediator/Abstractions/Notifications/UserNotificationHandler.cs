@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿using LearnMediator.Repositories.UserRepository;
+using MediatR;
 
-namespace LearnMediator.Models
+namespace LearnMediator.Abstractions.Notifications
 {
     public class UserNotificationHandler : INotificationHandler<UserNotification>
     {

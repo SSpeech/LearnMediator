@@ -1,9 +1,9 @@
-﻿using LearnMediator.Abstractions;
+﻿using LearnMediator.Models;
 using MediatR;
 using System.Windows.Input;
-using ICommand = LearnMediator.Abstractions.ICommand;
+using ICommand = LearnMediator.Abstractions.Commands.ICommand;
 
-namespace LearnMediator.Models
+namespace LearnMediator.Abstractions.Commands
 {
     public class CreateUserCommand : ICommand<User>
     {

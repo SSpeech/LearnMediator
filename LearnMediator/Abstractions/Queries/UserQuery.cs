@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿using LearnMediator.Models;
+using MediatR;
 
-namespace LearnMediator.Models;
+namespace LearnMediator.Abstractions.Queries;
 
 public class UserQuery : IQuery<User>
 {

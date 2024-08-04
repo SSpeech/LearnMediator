@@ -1,4 +1,7 @@
-﻿using LearnMediator.Abstractions;
+﻿using LearnMediator.Abstractions.Commands;
+using LearnMediator.Abstractions.Queries;
+using LearnMediator.Abstractions.Shared.Results;
+using LearnMediator.Extensions;
 using LearnMediator.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -9,8 +12,15 @@ namespace LearnMediator.Controllers
 {
     [Route("api/Users")]
     [ApiController]
-    public class LearnMediatorController(ISender _sender, IPublisher _publisher) : ControllerBase
+    public class LearnMediatorController : ControllerBase
     {
+        private readonly ISender _sender;
+
+        public LearnMediatorController(ISender sender)
+        {
+            _sender = sender;
+        }
+
         [HttpGet]
         public async Task<ActionResult> GetUsers(CancellationToken cancellationToken)
         {
@@ -29,10 +39,10 @@ namespace LearnMediator.Controllers
         }
 
         [HttpPost(Name = "AddUser")]
-        public async Task<ActionResult> AddUser([FromBody] User user, CancellationToken cancellationToken) 
+        public async Task<IActionResult> AddUser([FromBody] User user, CancellationToken cancellationToken) 
         {
-            var userCreated = await _sender.Send(new CreateUserCommand(user),cancellationToken);
-            return userCreated.IsSuccess? CreatedAtRoute("GetUserById",new { id = userCreated.Value.Id}, userCreated.Value) : BadRequest(userCreated.Error);
+            Result<User> userCreated = await _sender.Send(new CreateUserCommand(user),cancellationToken);
+            return userCreated.IsSuccess? CreatedAtRoute("GetUserById",new { id = userCreated.Value.Id}, userCreated.Value) : userCreated.HandleFailure();
         }
     }
 }
