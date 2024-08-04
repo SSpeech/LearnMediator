@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿using LearnMediator.Abstractions.Shared.Results;
+using MediatR;
 
-namespace LearnMediator.Abstractions
+namespace LearnMediator.Abstractions.Commands
 {
     public interface ICommand : IRequest<Result>
     {

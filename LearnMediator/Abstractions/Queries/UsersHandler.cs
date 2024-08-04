@@ -1,9 +1,12 @@
-﻿using LearnMediator.Abstractions;
+﻿using LearnMediator.Abstractions.Errors;
+using LearnMediator.Abstractions.Shared.Results;
+using LearnMediator.Models;
+using LearnMediator.Repositories.UserRepository;
 using MediatR;
 
-namespace LearnMediator.Models
+namespace LearnMediator.Abstractions.Queries
 {
-    public class UsersHandler : IQueryHandler<UsersQuery,IEnumerable<User>>
+    public class UsersHandler : IQueryHandler<UsersQuery, IEnumerable<User>>
     {
         private readonly FakeStoreData _storeData;
 
@@ -15,7 +18,7 @@ namespace LearnMediator.Models
             if (users is null)
             {
                 return Result.Failure<IEnumerable<User>>(new Error("User.NotFound", "No members in the record"));
-            }   
+            }
             return Result.Success(users);
         }
     }

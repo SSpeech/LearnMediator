@@ -1,7 +1,10 @@
-﻿using LearnMediator.Abstractions;
+﻿using LearnMediator.Abstractions.Errors;
+using LearnMediator.Abstractions.Shared.Results;
+using LearnMediator.Models;
+using LearnMediator.Repositories.UserRepository;
 using MediatR;
 
-namespace LearnMediator.Models
+namespace LearnMediator.Abstractions.Queries
 {
     public class UserQueryHandler : IQueryHandler<UserQuery, User>
     {

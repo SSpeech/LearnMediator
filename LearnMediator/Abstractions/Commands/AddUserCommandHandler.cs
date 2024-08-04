@@ -1,9 +1,11 @@
-﻿using LearnMediator.Abstractions;
+﻿using LearnMediator.Abstractions.Shared.Results;
+using LearnMediator.Models;
+using LearnMediator.Repositories.UserRepository;
 using MediatR;
 
-namespace LearnMediator.Models
+namespace LearnMediator.Abstractions.Commands
 {
-    public class AddUserCommandHandler : ICommandHandler<CreateUserCommand,User>
+    public class AddUserCommandHandler : ICommandHandler<CreateUserCommand, User>
     {
         private readonly FakeStoreData _storeData;
 
