@@ -1,14 +1,10 @@
 ﻿using MediatR;
 
-namespace LearnMediator.Models
-{
-    public class UserQuery : IRequest<User>
-    {
-        public UserQuery(int id)
-        {
-            Id = id;
-        }
+namespace LearnMediator.Models;
 
-        public int Id { get; set; }
-    }
+public class UserQuery : IQuery<User>
+{
+    public UserQuery(int id) => Id = id;
+
+    public int Id { get; set; }
 }

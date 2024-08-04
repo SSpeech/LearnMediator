@@ -8,7 +8,8 @@ public class FakeStoreData
         _users =
         [
             new() { Id = 1, Name = "Test", Email = "test.com" },
-            new() { Id = 2, Name = "Test", Email = "test.com" }
+            new() { Id = 2, Name = "Test", Email = "test.com" },
+            new() { Id = 3, Name = "Test", Email = "test.com" }
         ];
     }
     public async Task AddUser(User user)

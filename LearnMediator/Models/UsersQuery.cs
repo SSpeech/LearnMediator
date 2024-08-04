@@ -2,7 +2,7 @@
 
 namespace LearnMediator.Models
 {
-    public class UsersQuery : IRequest<IEnumerable<User>>
+    public class UsersQuery : IQuery<IEnumerable<User>>
     {
     }
 }

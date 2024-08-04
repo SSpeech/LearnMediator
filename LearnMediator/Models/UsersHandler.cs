@@ -1,17 +1,22 @@
-﻿using MediatR;
+﻿using LearnMediator.Abstractions;
+using MediatR;
 
 namespace LearnMediator.Models
 {
-    public class UsersHandler : IRequestHandler<UsersQuery, IEnumerable<User>>
+    public class UsersHandler : IQueryHandler<UsersQuery,IEnumerable<User>>
     {
         private readonly FakeStoreData _storeData;
 
         public UsersHandler(FakeStoreData storeData) => _storeData = storeData;
 
-        public async Task<IEnumerable<User>> Handle(UsersQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<User>>> Handle(UsersQuery request, CancellationToken cancellationToken)
         {
-           
-           return await _storeData.GetUsersAsync();
+            IEnumerable<User> users = await _storeData.GetUsersAsync();
+            if (users is null)
+            {
+                return Result.Failure<IEnumerable<User>>(new Error("User.NotFound", "No members in the record"));
+            }   
+            return Result.Success(users);
         }
     }
 }
