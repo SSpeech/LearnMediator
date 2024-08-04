@@ -2,7 +2,5 @@
 
 namespace LearnMediator.Models
 {
-    public record UserNotification(User User) : INotification
-    {
-    }
+    public record UserNotification(User User) : INotification;
 }
