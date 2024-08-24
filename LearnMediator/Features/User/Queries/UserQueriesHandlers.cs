@@ -5,14 +5,14 @@ using LearnMediator.Repositories.UserRepository;
 
 namespace LearnMediator.Features.User.Queries
 {
-    public class UserQueriesHandlers(FakeStoreData storeData) : IQueryHandler<GetUserByIdQuery, Models.User?>,
+    public class UserQueriesHandlers(FakeStoreData storeData) : IQueryHandler<GetUserByIdQuery, Models.User>,
                                                                 IQueryHandler<GetUsersListQuery, IEnumerable<Models.User>>
     {
-        public async Task<Result<Models.User?>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Result<Models.User>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             var user = await storeData.GetUserById(request.Id);
             return user is null
-                ? Result.Failure<Models.User>(new Error("User.NotFound", $"The User with Id {request.Id} was not Found"))
+                ? Result.Failure<Models.User>(new Error("User.NotFound", $"The User with Id {request.Id} was not Found"))!
                 : Result.Success(user);
         }
 
