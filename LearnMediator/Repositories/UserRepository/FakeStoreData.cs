@@ -4,31 +4,54 @@ namespace LearnMediator.Repositories.UserRepository;
 
 public class FakeStoreData
 {
-    private readonly List<User>? _users =
+    private readonly List<User> _users =
     [
-        new() { Id = 1, Name = "Test", Email = "test.com" },
-        new() { Id = 2, Name = "Test", Email = "test.com" },
-        new() { Id = 3, Name = "Test", Email = "test.com" }
+        new("Name1", "uniqueemail1@test.com"),
+        new("Name2", "uniqueemail2@test.com"),
+        new("Name3", "uniqueemail3@test.com"),
     ];
+
+    public async Task<IEnumerable<User>> GetUsersAsync() => await Task.FromResult(_users!);
+
+    /// <summary>
+    /// Retrieves the user by its id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<User?> GetUserById(Guid id)
+    {
+        var user = _users.SingleOrDefault(x => x.Id == id);
+        return await Task.FromResult(user);
+    }
+
+    /// <summary>
+    /// Retrieves the user by email (unique)
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public async Task<User?> GetUserByEmail(string email, CancellationToken cancellationToken = default)
+    {
+        // Check if the operation has been canceled
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var user = _users.SingleOrDefault(x => x.Email == email);
+        return await Task.FromResult(user);
+    }
 
     public async Task AddUser(User user)
     {
-        _users!.Add(user);
+        //User.Id should be unique and properly added here (EF?) but
+        //for the sake of demonstrating it with Guid, we are doing it at User's constructor
+        _users.Add(user);
         await Task.CompletedTask;
     }
 
-    public async Task<IEnumerable<User>> GetUsersAsync()
-    {
-        return await Task.FromResult(_users!);
-    }
-    public async Task<User> GetUserById(int id)
-    {
-        User? user = _users!.SingleOrDefault(x => x.Id == id);
-        return await Task.FromResult(user!);
-    }
     public async Task EventOccured(User user, string eventNotification)
     {
-        _users!.Single(x => x.Id == user.Id).Name = $"{user.Name} Notification:{eventNotification}";
+        var item = _users.Single(x => x.Id == user.Id);
+        item.SetName($"{user.Name} Notification:{eventNotification}");
+
         await Task.CompletedTask;
     }
 }

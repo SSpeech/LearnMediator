@@ -1,10 +1,7 @@
 ﻿using LearnMediator.Abstractions.Errors;
 using LearnMediator.Abstractions.Shared.Results;
 using LearnMediator.Abstractions.Shared.Validations;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace LearnMediator.Extensions
 {
