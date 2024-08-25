@@ -2,7 +2,7 @@
 
 namespace LearnMediator.Features.User.Queries;
 
-public class GetUserByIdQuery : IQuery<Models.User?>
+public class GetUserByIdQuery : IQuery<Models.User>
 {
     public GetUserByIdQuery(Guid id)
     {

@@ -1,6 +1,5 @@
 ﻿
 using Throw;
-
 namespace LearnMediator.Models;
 
 public class User

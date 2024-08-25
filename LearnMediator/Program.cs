@@ -1,11 +1,13 @@
 using FluentValidation;
 using LearnMediator;
 using LearnMediator.Abstractions.Shared.Behaviors;
+using LearnMediator.Abstractions.Shared.Exceptions;
 using LearnMediator.Repositories.UserRepository;
 using MediatR;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 // Add services to the container.
 builder.Services.AddMediatR(configuration => configuration
                 .RegisterServicesFromAssemblies(typeof(ILearnMediator).Assembly));
@@ -15,11 +17,13 @@ builder.Services.AddValidatorsFromAssembly(typeof(ILearnMediator).Assembly,inclu
 
 builder.Services.AddSingleton<FakeStoreData>();
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -27,8 +31,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
+app.UseExceptionHandler(options => { });
 
 app.UseAuthorization();
 
